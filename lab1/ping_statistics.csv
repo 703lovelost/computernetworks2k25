@@ -1,0 +1,11 @@
+resource,rtt
+google.com,rtt min/avg/max/mdev = 65.730/65.730/65.730/0.000 ms
+ya.ru,rtt min/avg/max/mdev = 57.409/57.409/57.409/0.000 ms
+liquipedia.net,rtt min/avg/max/mdev = 100.020/100.020/100.020/0.000 ms
+mail.ru,rtt min/avg/max/mdev = 96.317/96.317/96.317/0.000 ms
+nsu.ru,rtt min/avg/max/mdev = 2.577/2.577/2.577/0.000 ms
+github.com,rtt min/avg/max/mdev = 97.413/97.413/97.413/0.000 ms
+0.0.0.0,rtt min/avg/max/mdev = 0.030/0.030/0.030/0.000 ms
+vk.com,rtt min/avg/max/mdev = 55.587/55.587/55.587/0.000 ms
+gmail.com,rtt min/avg/max/mdev = 67.258/67.258/67.258/0.000 ms
+quora.com,NaN

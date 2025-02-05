@@ -2,7 +2,8 @@ import subprocess as sp
 import csv
 
 
-resources = ['google.com', 'ya.ru', 'liquipedia.net', 'mail.ru', 'nsu.ru', 'github.com', '0.0.0.0', 'vk.com', 'gmail.com', 'quora.com']
+resources = ['google.com', 'ya.ru', 'liquipedia.net', 'mail.ru', 'nsu.ru', 
+            'github.com', '0.0.0.0', 'vk.com', 'gmail.com', 'quora.com']
 
 with open('ping_statistics.csv', 'w', newline='') as file:
     writer = csv.writer(file)

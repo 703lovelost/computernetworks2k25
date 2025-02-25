@@ -27,12 +27,11 @@ def start_csv_writer(file):
 
     return writer
 
-def manage_pagination(driver):
-    message_table = driver.find_element(By.ID, 'maintableID')
+def manage_pagination(driver, message_table):
     pagination_string = message_table.find_elements(By.CLASS_NAME, 'tablehead')[1]
     forward_button = pagination_string.find_element(By.CSS_SELECTOR, 'a[title=\"К следующей странице\"]')
 
-    return message_table, forward_button
+    return forward_button
 
 def manage_message_blocks(writer, message_table):
     message_blocks = message_table.find_elements(By.CLASS_NAME, 'posttable')
@@ -57,12 +56,12 @@ with open('message_report.csv', 'w', newline='') as file:
     writer = start_csv_writer(file)
 
     while True:
+        message_table = driver.find_element(By.ID, 'maintableID')
         try:
-            message_table, forward_button = manage_pagination(driver)   
+            forward_button = manage_pagination(driver, message_table)   
             manage_message_blocks(writer, message_table)
             forward_button.click()
         except:
-            message_table = driver.find_element(By.ID, 'maintableID')
             manage_message_blocks(writer, message_table)
             break
 

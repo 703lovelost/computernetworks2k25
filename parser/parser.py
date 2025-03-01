@@ -9,9 +9,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 from selenium.webdriver.chrome.options import Options
 import csv
+from dto import Base, Message
 
-
-url = 'https://forum.vgd.ru/1693/115157/0.htm'
 
 def start_webdriver(url):
     driver = webdriver.Chrome()
@@ -33,7 +32,7 @@ def manage_pagination(driver, message_table):
 
     return forward_button
 
-def manage_message_blocks(writer, message_table):
+def manage_message_blocks(message_list, message_table):
     message_blocks = message_table.find_elements(By.CLASS_NAME, 'posttable')
 
     for message in message_blocks:
@@ -45,24 +44,36 @@ def manage_message_blocks(writer, message_table):
 
             message_descr_text_parsed = message_descr.text.replace('\n', ' ')
 
-            writer.writerow([message_username.text, message_descr_text_parsed,
-                            message_datetime.text, message_text.text])
+            # writer.writerow([message_username.text, message_descr_text_parsed,
+            #                 message_datetime.text, message_text.text])
+            message = Message(username = message_username.text,
+                                descr = message_descr_text_parsed,
+                                date_time = message_datetime.text,
+                                message = message_text.text
+                                )
+            message_list.append(message)
         except Exception as e:
             print("Could not extract message:", e)
 
-driver = start_webdriver(url)
+    return message_list
 
-with open('message_report.csv', 'w', newline='') as file:
-    writer = start_csv_writer(file)
+def manage_parser(url):
+    driver = start_webdriver(url)
+
+    # with open('message_report.csv', 'w', newline='') as file:
+        # writer = start_csv_writer(file)
+    message_list = []
 
     while True:
         message_table = driver.find_element(By.ID, 'maintableID')
         try:
             forward_button = manage_pagination(driver, message_table)   
-            manage_message_blocks(writer, message_table)
+            message_list = manage_message_blocks(message_list, message_table)
             forward_button.click()
         except:
-            manage_message_blocks(writer, message_table)
+            message_list = manage_message_blocks(message_list, message_table)
             break
 
-driver.quit()
+    driver.quit()
+    return message_list
+    

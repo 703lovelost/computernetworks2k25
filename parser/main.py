@@ -1,11 +1,14 @@
+import json
+
 from fastapi import FastAPI, Body, status
 from fastapi.responses import JSONResponse, FileResponse
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
 from parser import manage_parser
 from dto import Base, Message
 from jsonencode import serialize_complex
-import json
+
  
 SQLALCHEMY_DATABASE_URL = "postgresql://postgres:example@localhost/postgres"
  

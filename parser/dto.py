@@ -12,3 +12,9 @@ class Message(Base):
     descr = Column(String)
     date_time = Column(String)
     message = Column(String)
+
+class URL(Base):
+    __tablename__ = "urls"
+
+    id = Column(Integer, primary_key=True, index=True)
+    url = Column(String)

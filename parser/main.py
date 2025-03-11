@@ -7,7 +7,7 @@ from dto import Base, Message, URL
 from jsonencode import serialize_complex
 import json
  
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:example@localhost/postgres"
+SQLALCHEMY_DATABASE_URL = "postgresql://postgres:example@0.0.0.0/postgres"
  
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 

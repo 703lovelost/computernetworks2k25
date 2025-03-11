@@ -11,4 +11,4 @@ RUN useradd app
 USER app
 
 # CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080", "--app-dir=./src"]
-CMD ["uvicorn", "main:app", "--port", "8080", "--app-dir=./src"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080", "--app-dir=./src"]

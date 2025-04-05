@@ -1,31 +1,47 @@
 services:
+  app:
+    image: lovelost/parser
+    restart: always
+    expose:
+      - 8080
+    networks:
+      - backend
 
   db:
     image: postgres
     restart: always
-    # set shared memory limit when using docker-compose
     shm_size: 128mb
-    # or set shared memory limit when deploy via swarm stack
-    #volumes:
-    #  - type: tmpfs
-    #    target: /dev/shm
-    #    tmpfs:
-    #      size: 134217728 # 128*2^20 bytes = 128Mb
-    ports:
-      - 5432:5432
+    expose:
+      - 5432
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: example
     networks:
-      - database-network
+      - backend
 
-  adminer:
-    image: adminer
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   expose:
+  #     - 8080
+  #   networks:
+  #     - backend
+
+  nginx:
+    image: anroe/nginx-geoip2
     restart: always
     ports:
-      - 8080:8080
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./geolite-db/GeoLite2-Country.mmdb:/etc/nginx/GeoLite2-Country.mmdb
+    depends_on:
+      - app
+      # - adminer
+    networks:
+      - backend
 
 networks:
-  database-network:
-    name: database-network
+  backend:
+    driver: bridge

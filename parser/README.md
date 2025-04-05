@@ -7,5 +7,8 @@ Start the server:
     docker build -t lovelost/parser .
 
     # To start the application
-    docker run -p 23930:8080 --network database-network lovelost/parser:latest
+    docker compose up
+
+    # To open the IP
+    docker run --net=host -it -e NGROK_AUTHTOKEN=authtoken ngrok/ngrok http 80
 ```

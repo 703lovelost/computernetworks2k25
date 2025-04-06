@@ -1,0 +1,55 @@
+services:
+  app:
+    image: 703lovelost/parser
+    restart: always
+    expose:
+      - 8080
+    networks:
+      - backend_ipv6
+
+  db:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    expose:
+      - 5432
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+    command: ["postgres", "-c", "listen_addresses=*"]
+    networks:
+      - backend_ipv6
+
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   expose:
+  #     - 8080
+  #   networks:
+  #     - backend_ipv6
+
+  nginx:
+    image: anroe/nginx-geoip2
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx_ipv6.conf:/etc/nginx/nginx.conf
+      - ./geolite-db/GeoLite2-Country.mmdb:/etc/nginx/GeoLite2-Country.mmdb
+    depends_on:
+      - app
+      # - adminer
+    networks:
+      - backend_ipv6
+
+networks:
+  backend_ipv6:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+        - subnet: fd48:7e80:9082:9fb1::/64
+          gateway: fd48:7e80:9082:9fb1::1

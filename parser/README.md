@@ -9,6 +9,6 @@ Start the server:
     # To start the application
     docker compose up
 
-    # To open the IP
+    # To open the IP (Enter your own $NGROK_AUTHTOKEN)
     docker run --net=host -it -e NGROK_AUTHTOKEN=authtoken ngrok/ngrok http 80
 ```

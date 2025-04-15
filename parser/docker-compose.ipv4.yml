@@ -35,7 +35,7 @@ services:
     image: anroe/nginx-geoip2
     restart: always
     ports:
-      - 80:80
+      - 23930:80
     volumes:
       - ./nginx_ipv4.conf:/etc/nginx/nginx.conf
       - ./geolite-db/GeoLite2-Country.mmdb:/etc/nginx/GeoLite2-Country.mmdb
